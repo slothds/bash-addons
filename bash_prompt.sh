@@ -23,21 +23,21 @@ build_prompt() {
         else
             unset cc cu cw cp ct cg
         fi
-        user_string="${user_string:-'\u'}"
-        path_string="${path_string:-'\W'}"
-        char_string="${char_string:-'\$'}"
+        user_string="${user_string:-\u}"
+        path_string="${path_string:-\W}"
+        char_string="${char_string:-\$}"
 
         _user="${cu}${user_string}${cc}"
         _path="${cw}${path_string}${cc}"
         _char="${cp}${char_string}${cc}"
         if [ -n "${time_enable}" -a "x${time_enable}" = "xyes" ];then
-            time_string="${time_string:-' \A '}"
+            time_string="${time_string:-\A }"
             _time="${ct}${time_string}${cc}"
         fi
         if [ -n "${git_enable}" -a "x${git_enable}" = "xyes" ];then
             if [ -f /etc/profile.d/git-prompt.sh ];then
                 source /etc/profile.d/git-prompt.sh
-                git_string="${git_string:-'(%s) '}"
+                git_string="${git_string:-(%s) }"
                 _git="${cg}`__git_ps1 "${git_string}"`${cc}"
             fi
         fi
