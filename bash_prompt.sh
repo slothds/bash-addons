@@ -60,4 +60,7 @@ build_prompt() {
     unset prompt_default prompt_string
 }
 
-PROMPT_COMMAND="build_prompt;${PROMPT_COMMAND}"
+case ${PROMPT_COMMAND} in
+    *'build_prompt'*)   ;;
+    *)                  PROMPT_COMMAND="build_prompt;${PROMPT_COMMAND}" ;;
+esac
