@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+printf "\n\t\033[3;33mUsage:\n\t\t\\\033[<code>m{{SOME TEXT}}\\\033[0m\033[0m\n\n\033[4;32mCODES TABLE\033[0m:\n"
+
+for c in `echo '30 40 90 100'`; do
+    cc=0
+    while [ $cc -le 7 ];do
+        ccc=$(echo "$c + $cc"|bc -l)
+        s=0
+        while [ $s -le 9 ];do
+            printf "\033[%s;%sm%-5s\033[0m " "${s}" "${ccc}" "${s};${ccc}"
+            s=$((s+1))
+        done
+        unset ccc
+        printf "\n"
+        cc=$((cc+1))
+    done
+done
