@@ -25,7 +25,7 @@ build_prompt() {
         fi
         user_string="${user_string:-\u}"
         path_string="${path_string:-\W}"
-        char_string="${char_string:-\$}"
+        char_string="${char_string:- \$}"
 
         _user="${cu}${user_string}${cc}"
         _path="${cw}${path_string}${cc}"
@@ -37,12 +37,12 @@ build_prompt() {
         if [ -n "${git_enable}" -a "x${git_enable}" = "xyes" ];then
             if [ -f /etc/profile.d/git-prompt.sh ];then
                 source /etc/profile.d/git-prompt.sh
-                git_string="${git_string:-(%s) }"
+                git_string="${git_string:- (%s)}"
                 _git="${cg}`__git_ps1 "${git_string}"`${cc}"
             fi
         fi
 
-        prompt_default="${_time}[ ${_user} ${_path} ] ${_git}${_char}"
+        prompt_default="${_time}[ ${_user} ${_path}${_git} ]${_char}"
         if [ -z "${prompt_string}" ];then
             prompt_string="${prompt_default}"
         else

@@ -10,7 +10,7 @@ path_string="\W"
 path_color="3;33"
 
 # cmd char string
-char_string="\$"
+char_string=" \$"
 char_color="2;33"
 
 # Show curent time in prompt string
@@ -21,7 +21,7 @@ time_color="0;00"
 # Git branch display if $PWD is git repository.
 # For more info see https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 git_enable="yes"
-git_string="(%s) "    
+git_string=" (%s)"
 git_color="6;36"
 
 ##### !DANGER! Think what you do :O
@@ -31,4 +31,4 @@ git_color="6;36"
 ###    ${_char} : expand to {char_color}{char_string}{/char_color}
 ###    ${_time} : expand to {time_color}{time_string}{/time_color}
 ###    ${_git}  : expand to {git_color}{git_string}{/git_color}
-# prompt_string='${_time}[ ${_user} ${_path} ] ${_git}${_char}'
+# prompt_string='${_time}[ ${_user} ${_path}${_git} ]${_char}'
