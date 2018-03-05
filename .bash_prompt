@@ -1,4 +1,4 @@
-# Use colorized console?
+# colorize prompt?
 color_enable="yes"
 
 # user string
@@ -8,6 +8,7 @@ user_color="0;32"
 # path string
 path_string="\\W"
 path_color="3;33"
+# export PROMPT_DIRTRIM=2    ## see discription in bash(1)
 
 # cmd char string
 char_string=" \\$"
