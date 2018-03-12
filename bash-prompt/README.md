@@ -1,6 +1,6 @@
 Bash Promt Add-on
 ======
-Generate prompt string
+Generate prompt string  
 ![prompt example](bash_prompt.png)
 
 ## Installation
