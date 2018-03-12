@@ -1,6 +1,7 @@
 Bash Promt Add-on
 ======
 Generate prompt string
+![prompt example](bash_prompt.png)
 
 ## Installation
 * ``` sudo cp bash_prompt.sh /etc/profile.d/ ```
