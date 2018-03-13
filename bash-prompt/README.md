@@ -1,4 +1,4 @@
-Bash Promt Add-on
+Bash Prompt Add-on
 ======
 Generate prompt string  
 ![prompt example](bash_prompt.png)
