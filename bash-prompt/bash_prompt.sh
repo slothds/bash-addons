@@ -1,12 +1,12 @@
-build_prompt() {
-    local user_string path_string char_string time_string git_string
-    local cc cu cw cp ct cg
-    local user_color path_color char_color time_color git_color
-    local time_enable git_enable
-    local _user _path _char _time _git
-    local prompt_default prompt_string
+if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
+    __bash_prompt_build() {
+        local user_string path_string char_string time_string git_string
+        local cc cu cw cp ct cg
+        local user_color path_color char_color time_color git_color
+        local time_enable git_enable
+        local _user _path _char _time _git
+        local prompt_default prompt_string
 
-    if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         if [ -f "${HOME}/.bash_prompt" ];then
             source ${HOME}/.bash_prompt
         fi
@@ -50,17 +50,17 @@ build_prompt() {
         fi
 
         export PS1=" ${prompt_string} "
-    fi
 
-    unset user_string path_string char_string time_string git_string
-    unset cc cu cw cp ct cg
-    unset user_color path_color char_color time_color git_color
-    unset time_enable git_enable
-    unset _user _path _char _time _git
-    unset prompt_default prompt_string
-}
+        unset user_string path_string char_string time_string git_string
+        unset cc cu cw cp ct cg
+        unset user_color path_color char_color time_color git_color
+        unset time_enable git_enable
+        unset _user _path _char _time _git
+        unset prompt_default prompt_string
+    }
 
-case ${PROMPT_COMMAND} in
-    *'build_prompt'*)   ;;
-    *)                  PROMPT_COMMAND="build_prompt;${PROMPT_COMMAND}" ;;
-esac
+    case ${PROMPT_COMMAND} in
+        *'__bash_prompt_build'*)   ;;
+        *)                  PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND}" ;;
+    esac
+fi
