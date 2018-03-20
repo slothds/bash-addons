@@ -1,0 +1,34 @@
+## colorize prompt?
+color_enable="yes"
+
+## colors settings
+color_user="0;32"
+color_path="3;33"
+color_char="2;33"
+
+## strings settings
+string_user="\\u"
+string_path="\\w"
+string_char=" \\$"
+
+## addition prompt settings
+export PROMPT_DIRTRIM=2    ## see discription in bash(1)
+
+## Show curent time in prompt string
+time_enable="no"
+string_time="\\A "
+color_time="0;00"
+
+#####
+### Git branch display if $PWD is git repository.
+# Requirements:
+#   - curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /etc/profile.d/git-prompt.sh
+#
+# For more info see git-prompt.sh descriptions.
+#####
+git_enable="no"
+string_git=" (%s)"
+color_git="6;36"
+
+##### !DANGER! Think what you do :O
+# prompt='${string_time}[ ${string_user} ${string_path}${string_git} ]${string_char}'
