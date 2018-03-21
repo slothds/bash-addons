@@ -4,8 +4,8 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         export HISTSIZE=100000                   # big big history
         export HISTFILESIZE=100000               # big big history
         case ${PROMPT_COMMAND} in
-            *'history -a'*) ;;
-            *)                export PROMPT_COMMAND="history -a;${PROMPT_COMMAND}" ;;
+            *'history -a;history -r'*) ;;
+            *)                export PROMPT_COMMAND="history -a;history -r;${PROMPT_COMMAND}" ;;
         esac
     }
 
