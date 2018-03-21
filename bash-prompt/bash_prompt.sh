@@ -1,9 +1,9 @@
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
     __bash_prompt_build() {
-        #local string_list string_user string_path string_char string_time string_git
-        #local color_list color_user color_path color_char color_time color_git
-        #local color_enable time_enable git_enable
-        #local prompt_default prompt
+        local string_list string_user string_path string_char string_time string_git
+        local color_list color_user color_path color_char color_time color_git
+        local color_enable time_enable git_enable
+        local prompt_default prompt
 
         if [ -f "${HOME}/.bash_prompt" ];then
             source ${HOME}/.bash_prompt
@@ -70,7 +70,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
 
         prompt_default="${string_time}[ ${string_user} ${string_path}${string_git} ] ${string_char}"
         if [ -z "${prompt}" ];then
-            prompt="${prompt_default}"
+            prompt=${prompt_default@P}
         else
             prompt=${prompt@P}
         fi
