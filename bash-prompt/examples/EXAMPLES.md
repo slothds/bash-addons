@@ -1,4 +1,0 @@
-PROMPT STRING EXAMPLES
-======
-
-```
