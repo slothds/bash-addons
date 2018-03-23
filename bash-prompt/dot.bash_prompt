@@ -1,23 +1,23 @@
 ## colorize prompt?
-color_enable="yes"
+color_enable='yes'
 
 ## colors settings
-color_user="0;32"
-color_path="0;33"
-color_char="6;31"
+color_user='0;32'
+color_path='0;33'
+color_char='6;31'
 
 ## strings settings
-string_user="\u"
-string_path="\w"
-string_char="\$"
+string_user='\u@\h'
+string_path='\w'
+string_char='\$'
 
 ## addition prompt settings
 export PROMPT_DIRTRIM=2    ## see discription in bash(1)
 
 ## Show curent time in prompt string
-time_enable="no"
-string_time="\A "
-color_time="-"
+time_enable='no'
+string_time='[\A] '
+color_time='-'
 
 #####
 ### Git branch display if $PWD is git repository.
@@ -26,9 +26,9 @@ color_time="-"
 #
 # For more info see git-prompt.sh descriptions.
 #####
-git_enable="no"
-string_git=" (%s)"
-color_git="6;36"
+git_enable='no'
+string_git=' (%s)'
+color_git='6;36'
 
 ##### !DANGER! Think what you do :O
-# prompt='${string_time}[ ${string_user} ${string_path}${string_git} ] ${string_char}'
+# prompt='${string_time}${string_user} ${string_path}${string_git} ${string_char}'
