@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-printf "\n\t\033[3;33mUsage:\n\t\t\\\033[<code>m{{SOME TEXT}}\\\033[0m\033[0m\n\n\033[4;32mCODES TABLE\033[0m:\n"
+printf "\n\t\033[3;33mUsage:\n\t\techo -e '\\\E[<code>m{{SOME TEXT}}\\\E(B\\\E[m'\n\t\tOR\n\t\tprompt '\[\\\e[<code>m\]{{SOME TEXT}}\[\\\e[0m\]'\033[0m\n\n\033[4;32mCODES TABLE\033[0m:\n"
 
 for c in `echo '30 40 90 100'`; do
     cc=0
