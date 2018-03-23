@@ -32,10 +32,10 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         color_time=${color_time:--}
         color_git=${color_git:-6;36}
 
-        string_user=${string_user:-\u}
-        string_path=${string_path:-\w}
-        string_char=${string_char:-\$}
-        string_time=${string_time:-\A }
+        string_user=${string_user:-\\u}
+        string_path=${string_path:-\\w}
+        string_char=${string_char:-\\$}
+        string_time=${string_time:-\\A }
         string_git=${string_git:- (%s)}
 
         color_list=$(compgen -v|grep -P '^color_.+$'|tr '\n' ' ')
