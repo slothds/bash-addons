@@ -11,7 +11,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         local prompt_default prompt
 
         if ! [[ ${PROMPT_COMMAND} =~ ^__bash_prompt_build\;.+$ ]];then
-            export PROMPT_COMMAND="__bash_prompt_build;$(echo "${PROMPT_COMMAND}"|sed 's/__bash_prompt_build\;//g;')"
+            export PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND//__bash_prompt_build;/}"
         fi
 
         if [[ -f /etc/bash.prompt && -r /etc/bash.prompt ]];then
@@ -96,5 +96,5 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         unset last_cmd_exit
     }
 
-    [[ ! ${PROMPT_COMMAND} =~ .*__bash_prompt_build.* ]] && export PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND}" || true
+    [[ ! ${PROMPT_COMMAND} =~ .*__bash_prompt_build\;.* ]] && export PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND#;}" || true
 fi
