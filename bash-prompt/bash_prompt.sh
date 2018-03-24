@@ -1,5 +1,5 @@
 ###################################################
-### Bash Prompt Generator [v2.1]
+### Bash Prompt Generator [v2.1.1]
 ### by SlothDS
 ###################################################
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
@@ -41,9 +41,8 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         if [[ -n ${color_enable} && ${color_enable} == yes ]];then
             REGEX='^[0-9]{1};[0-9]{2,3}$'
             for color in ${color_list};do
-                if [[ ${!color} =~ ${REGEX} ]];then
-                    eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
-                fi
+                [[ ! ${!color} =~ ${REGEX} ]] && unset ${color} || \
+                eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
             done
             unset color
 
@@ -55,13 +54,9 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
 
         string_list=$(compgen -v|grep -P '^string_.+$'|tr '\n' ' ')
         for string in ${string_list};do
-            part=`echo ${string}|awk -F'_' '{print $2}'`
+            part=${string#string_}
             eval color=\${color_${part}}
-            if [[ -n ${color} && ${color} != - ]];then
-                eval ${string}="'${color}${!string}${color_close}'"
-            else
-                eval ${string}="'${!string}'"
-            fi
+            eval ${string}="'${color}${!string}${color_close}'"
             unset part color
         done
         unset string
