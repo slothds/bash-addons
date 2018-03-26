@@ -11,7 +11,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         [[ ${HISTSIZE} -lt ${history_size} ]]        && export HISTSIZE=100000                  || true # big big history
         [[ ${HISTFILESIZE} -lt ${history_size} ]]    && export HISTFILESIZE=100000              || true # big big history
 
-        if ! [[ ${PROMPT_COMMAND} =~ ^.+\;history\ \-a\;history\ \-r\;$ ]];then
+        if ! [[ ${PROMPT_COMMAND} =~ ^.+\;history\ \-n\;history\ \-w\;history\ \-c\;history\ \-r\;$ ]];then
             _tmp_pcmd="${PROMPT_COMMAND//history -[cnrw];/}"
             _tmp_pcmd="${_tmp_pcmd%;}"
             export PROMPT_COMMAND="${_tmp_pcmd};history -n;history -w;history -c;history -r;"
