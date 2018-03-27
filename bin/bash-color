@@ -1,17 +1,39 @@
 #!/usr/bin/env bash
-printf "\n\t\033[3;33mUsage:\n\t\techo -e '\\\E[<code>m{{SOME TEXT}}\\\E(B\\\E[m'\n\t\tOR\n\t\tprompt '\[\\\e[<code>m\]{{SOME TEXT}}\[\\\e[0m\]'\033[0m\n\n\033[4;32mCODES TABLE\033[0m:\n"
-
-for c in `echo '30 40 90 100'`; do
+printf "\n"
+printf "\t\033[3;33mUsage:\n"
+printf "\t\techo -e '\\\E[(<bgcode>;)?<code>m{{SOME TEXT}}\\\E(B\\\E[m'\n"
+printf "\t\t  OR\n"
+printf "\t\tin \$PS1 '\[\\\e[(<bgcode>;)?<code>m\]{{SOME TEXT}}\[\\\e[0m\]'\033[0m"
+printf "\n\n"
+printf "    \033[4;32mCODES TABLE\033[0m\n\n"
+for c in $(echo '30 90'); do
     cc=0
-    while [ $cc -le 7 ];do
-        ccc=$(echo "$c + $cc"|bc -l)
-        s=0
-        while [ $s -le 9 ];do
-            printf "\033[%s;%sm%-5s\033[0m " "${s}" "${ccc}" "${s};${ccc}"
-            s=$((s+1))
+    while [ ${cc} -le 7 ];do
+        ccc=$((${c}+${cc}))
+        cm=-1
+        while [ ${cm} -lt 9 ];do
+            cm=$((cm+1))
+            [[ ${cm} -eq 7 || ${cm} -eq 8 ]] && continue || \
+            printf "\033[%s;%sm%5s\033[0m " "${cm}" "${ccc}" "${cm};${ccc}"
         done
-        unset ccc
+        unset cm ccc
         printf "\n"
         cc=$((cc+1))
     done
+    unset cc
 done
+unset c
+printf "\n"
+printf "    \033[4;32mBGCODE TABLE\033[0m\n\n"
+for b in $(echo '40 100');do
+    bc=0
+    while [[ ${bc} -le 7 ]];do
+        bcc=$((${b}+${bc}))
+        printf "\033[%s;2;30m%5s\033[0m " "${bcc}" "${bcc}"
+        bc=$((bc+1))
+        unset bcc
+    done
+    unset bc
+    printf "\n"
+done
+unset b

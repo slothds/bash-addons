@@ -1,5 +1,5 @@
 ###################################################
-### Bash(v4.4) Prompt Generator [v2.1.1]
+### Bash(v4.4) Prompt Generator [v2.2]
 ### by SlothDS
 ###################################################
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
@@ -36,7 +36,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
 
         color_list=$(compgen -v|grep -P '^color_.+$'|tr '\n' ' ')
         if [[ -n ${color_enable} && ${color_enable} == yes ]];then
-            REGEX='^[0-9]{1};[0-9]{2,3}$'
+            REGEX='^((4|10)[0-7];)?([[:digit:]];)?(3|9)[0-7]$'
             for color in ${color_list};do
                 [[ ! ${!color} =~ ${REGEX} ]] && unset ${color} || \
                 eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
@@ -53,7 +53,10 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         for string in ${string_list};do
             part=${string#string_}
             eval color=\${color_${part}}
-            eval ${string}="'${color}${!string}${color_close}'"
+            [[ -n ${color} ]] && \
+                eval ${string}="'${color}${!string}${color_close}'" \
+            || \
+                eval ${string}="'${!string}'"
             unset part color
         done
         unset string
