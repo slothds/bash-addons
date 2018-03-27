@@ -1,13 +1,10 @@
 ###################################################
-### Bash Prompt Generator [v2.1.1]
+### Bash(v4.2) Prompt Generator [v2.1.1]
 ### by SlothDS
 ###################################################
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
     __bash_prompt_build() {
         local last_cmd_exit=$?
-        local string_list string_user string_path string_char string_time string_git
-        local color_list color_user color_path color_char color_time color_git
-        local color_enable time_enable git_enable
         local prompt_default prompt
 
         if ! [[ ${PROMPT_COMMAND} =~ ^__bash_prompt_build\;.+$ ]];then
@@ -79,10 +76,10 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         if [[ -z ${prompt} ]];then
             prompt=${prompt_default}
         else
-            prompt="${prompt@P}"
+            prompt=$(eval echo ${prompt})
         fi
 
-        export PS1=" ${prompt@P} "
+        export PS1=" ${prompt} "
 
         unset ${string_list} string_list
         unset ${color_list} color_close color_list
