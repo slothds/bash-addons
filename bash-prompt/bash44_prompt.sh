@@ -32,12 +32,20 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         string_time=${string_time:-[\\A] }
         string_git=${string_git:-(%s)}
 
-        color_list=$(compgen -v | grep -P '^color_.+$' | tr '\n' ' ')
-        if [[ -n ${color_enable} && ${color_enable} == yes ]]; then
-            REGEX='^((4|10)[0-7];)?([[:digit:]];)?(3|9)[0-7]$'
-            for color in ${color_list}; do
-                [[ ! ${!color} =~ ${REGEX} ]] && unset ${color} \
-                    || eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
+        color_list=$(compgen -v|grep -P '^color_.+$'|tr '\n' ' ')
+        if [[ -n ${color_enable} && ${color_enable} == yes ]];then
+            for color in ${color_list};do
+                if [[ ! ${color} =~ ^color_bg_.+$ ]];then
+                    [[ ! ${!color} =~ ^((4|10)[0-7];)?([[:digit:]];)?(3|9)[0-7]$ ]] && \
+                        unset ${color} \
+                    || \
+                        eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
+                else
+                    [[ ! ${!color} =~ ^(4|10)[0-7]$ ]] && \
+                        unset ${color} \
+                    || \
+                        eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
+                fi
             done
             unset color
 
@@ -51,9 +59,11 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         for string in ${string_list}; do
             part=${string#string_}
             eval color=\${color_${part}}
-            [[ -n ${color} ]] \
-                && eval ${string}="'${color}${!string}${color_close}'" \
-                || eval ${string}="'${!string}'"
+            eval color_bg=\${color_bg_${part}}
+            [[ -n ${color} || -n ${color_bg} ]] && \
+                eval ${string}="'${color_bg}${color}${!string}${color_close}'" \
+            || \
+                eval ${string}="'${!string}'"
             unset part color
         done
         unset string

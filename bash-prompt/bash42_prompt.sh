@@ -76,7 +76,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         if [[ -z ${prompt} ]]; then
             prompt=${prompt_default}
         else
-            prompt=$(eval echo ${prompt})
+            prompt=$(eval echo '${prompt}')
         fi
 
         export PS1=" ${prompt} "
