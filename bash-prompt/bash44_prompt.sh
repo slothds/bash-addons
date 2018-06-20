@@ -1,21 +1,19 @@
 ###################################################
-### Bash(v4.4) Prompt Generator [v2.2]
-### by SlothDS
+### Bash(v4.4) Prompt Generator [v3.0.1]
+### by SlothDS (sloth[at]devils.su)
 ###################################################
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
-    __bash_prompt_build() {
+    badd_prompt() {
         local last_cmd_exit=$?
         local prompt_default prompt
 
-        if ! [[ ${PROMPT_COMMAND} =~ ^__bash_prompt_build\;.+$ ]];then
-            export PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND//__bash_prompt_build;/}"
-        fi
+        badd_pcl begin badd_prompt
 
-        if [[ -f /etc/bash.prompt && -r /etc/bash.prompt ]];then
+        if [[ -f /etc/bash.prompt && -r /etc/bash.prompt ]]; then
             source /etc/bash.prompt
         fi
 
-        if [[ -f ${HOME}/.bash_prompt && -r ${HOME}/.bash_prompt ]];then
+        if [[ -f ${HOME}/.bash_prompt && -r ${HOME}/.bash_prompt ]]; then
             source ${HOME}/.bash_prompt
         fi
 
@@ -34,12 +32,12 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         string_time=${string_time:-[\\A] }
         string_git=${string_git:-(%s)}
 
-        color_list=$(compgen -v|grep -P '^color_.+$'|tr '\n' ' ')
-        if [[ -n ${color_enable} && ${color_enable} == yes ]];then
+        color_list=$(compgen -v | grep -P '^color_.+$' | tr '\n' ' ')
+        if [[ -n ${color_enable} && ${color_enable} == yes ]]; then
             REGEX='^((4|10)[0-7];)?([[:digit:]];)?(3|9)[0-7]$'
-            for color in ${color_list};do
-                [[ ! ${!color} =~ ${REGEX} ]] && unset ${color} || \
-                eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
+            for color in ${color_list}; do
+                [[ ! ${!color} =~ ${REGEX} ]] && unset ${color} \
+                    || eval ${color}='$(printf "\\\\[\\\\e[%sm\\\\]" "${!color}")'
             done
             unset color
 
@@ -49,23 +47,22 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
             unset ${color_list} color_list
         fi
 
-        string_list=$(compgen -v|grep -P '^string_.+$'|tr '\n' ' ')
-        for string in ${string_list};do
+        string_list=$(compgen -v | grep -P '^string_.+$' | tr '\n' ' ')
+        for string in ${string_list}; do
             part=${string#string_}
             eval color=\${color_${part}}
-            [[ -n ${color} ]] && \
-                eval ${string}="'${color}${!string}${color_close}'" \
-            || \
-                eval ${string}="'${!string}'"
+            [[ -n ${color} ]] \
+                && eval ${string}="'${color}${!string}${color_close}'" \
+                || eval ${string}="'${!string}'"
             unset part color
         done
         unset string
 
-        if [[ -z ${time_enable} || ${time_enable} != yes ]];then
+        if [[ -z ${time_enable} || ${time_enable} != yes ]]; then
             unset string_time
         fi
-        if [[ -n ${git_enable} && ${git_enable} == yes ]];then
-            if [ -f /etc/profile.d/git-prompt.sh ];then
+        if [[ -n ${git_enable} && ${git_enable} == yes ]]; then
+            if [ -f /etc/profile.d/git-prompt.sh ]; then
                 source /etc/profile.d/git-prompt.sh
                 string_git=$(__git_ps1 "${string_git}")
             else
@@ -76,7 +73,7 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         fi
 
         prompt_default="${string_time}${string_user} ${string_path}${string_git} ${string_char}"
-        if [[ -z ${prompt} ]];then
+        if [[ -z ${prompt} ]]; then
             prompt=${prompt_default}
         else
             prompt="${prompt@P}"
@@ -91,5 +88,5 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
         unset last_cmd_exit
     }
 
-    [[ ! ${PROMPT_COMMAND} =~ .*__bash_prompt_build\;.* ]] && export PROMPT_COMMAND="__bash_prompt_build;${PROMPT_COMMAND#;}" || true
+    badd_pcl begin badd_prompt
 fi
