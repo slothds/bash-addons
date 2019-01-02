@@ -1,22 +1,24 @@
 ###################################################
-### Bash History Hack [v3.0.1]
+### Bash History Hack
 ### by SlothDS (sloth[at]devils.su)
 ###################################################
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
     badd_history() {
         local history_size=100000
+        local history_time='%Y-%m-%d %T '
         local history_rule='history -a;history -n;history -w;history -c;history -r;'
 
         [[ ${HISTCONTROL} != ignoredups:erasedups ]] && export HISTCONTROL=ignoredups:erasedups || true # no duplicate entries
         [[ ${HISTSIZE} -lt ${history_size} ]] && export HISTSIZE=100000 || true                         # big big history
         [[ ${HISTFILESIZE} -lt ${history_size} ]] && export HISTFILESIZE=100000 || true                 # big big history
+        [[ ${HISTTIMEFORMAT} != ${history_time} ]] && export HISTTIMEFORMAT=${history_time} || true     # set history timestamp
 
         badd_pcl begin "${history_rule}" 'history -[acnprsw]'
 
         unset history_size history_rule _hist_regex
     }
 
-    badd_pcl end badd_history
+    badd_pcl 0 badd_history
 
     # append to history, don't overwrite it
     if [[ $(shopt | awk '/histappend/{print $2}') != on ]]; then

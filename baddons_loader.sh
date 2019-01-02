@@ -1,8 +1,7 @@
 ###################################################
-### Bash Add-Ons Loader [v3.0.1]
+### Bash Add-Ons Loader
 ### by SlothDS (sloth[at]devils.su)
 ###################################################
-set -x
 if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
     badd_pcl() {
         local pcl_position=$1
@@ -41,15 +40,31 @@ if [ -n "$BASH_VERSION" -a -n "$PS1" ]; then
                 PROMPT_COMMAND="${BASH_REMATCH[1]};${BASH_REMATCH[2]}"
             done
             [[ ! ${PROMPT_COMMAND} =~ \;$ ]] && PROMPT_COMMAND="${PROMPT_COMMAND};" || true
-            [[ ${PROMPT_COMMAND} =~ ^\; ]] && PROMPT_COMMAND=${PROMPT_COMMAND##;} || true
+            [[ ${PROMPT_COMMAND} =~ ^\; ]] && PROMPT_COMMAND=${PROMPT_COMMAND##\;} || true
 
             export PROMPT_COMMAND
         done
     }
 
-    # badd_dir=${addons_directory:-/usr/share/bash_addons.d}
+    badd_loader() {
+        if [[ -f /etc/bash-addons.conf && -r /etc/bash-addons.conf ]]; then
+            source /etc/bash-addons.conf
+        fi
+        badd_ldir=${addons_directory:-'/usr/local/share/bash-addons.d'}
+        badd_ltyp=${addons_lodertype:-'standalone'}
 
-    # for bpc_addon in ${badd_dir}/*; do
-    #     source ${bpc_addon}
-    # done
+        case ${badd_ltyp} in
+            'standalone')
+                badd_loader
+                ;;
+            'autoload')
+                badd_pcl 2 badd_loader
+                ;;
+        esac
+        for bpc_addon in ${badd_ldir}/*.sh; do
+            source ${bpc_addon}
+        done
+    }
+
+    badd_loader
 fi
